@@ -9,15 +9,16 @@ from math import sqrt
 from matplotlib import pyplot as plt 
 from matplotlib import animation
 
-from body import body
+from body import Body
 
-class nBodySimulator(object):
+class NBodySimulator(object):
     """Run an N-body and save it to a file or run realtime"""
 
     def __init__(self, bodies):
         """Create a new simulation
 
-        bodies - list of bodies that are to be simulated"""
+        bodies - list of bodies that are to be simulated
+        """
 
         self.G =  6.67384*(10**(-11))
         self.bodies = bodies
@@ -26,15 +27,16 @@ class nBodySimulator(object):
     def setG(self, i):
         """Change the value of the gravitational constant
 
-        i - new value for G"""
-
+        i - new value for G
+        """
         self.G = i
 
     def calcAcc(self, m1, m2):
         """Calculate the acceleration on m1 from m2
 
         m1 - body being accelerated
-        m2 - body doing the accelerating"""
+        m2 - body that exerts it's gravitational pull on the other
+        """
 
         # Fx = (G * m1 * m2)(x1 - x2)/(total_distance)
         term1 = self.G * m1.mass * m2.mass 
@@ -93,7 +95,7 @@ class nBodySimulator(object):
             body.yPos += body.yVel * dt
         
     def run(self, bodies, **kwargs):
-        """Runs the simulation.
+        """Run the simulation.
 
         bodies - List of bodies to simulate
 
@@ -103,15 +105,17 @@ class nBodySimulator(object):
         length - length of the animation in seconds
         plot_size - size of the background of the animation
         file_name - name to save the animation as
-        real_time - whether or not to show the animation in real time"""
+        real_time - whether or not to show the animation as the simulation
+                        runs instead of saving it to a file
+        """
 
         defaults = {
-        'time_step':0.1,
-        'frame_step':10,
-        'length':10,
-        'plot_size':100,
-        'file_name':'simulation.mp4',
-        'real_time':False
+            'time_step':0.1,
+            'frame_step':10,
+            'length':10,
+            'plot_size':100,
+            'file_name':'simulation.mp4',
+            'real_time':False
         }
 
         defaults.update(kwargs)
@@ -130,7 +134,6 @@ class nBodySimulator(object):
 
  
         fig = plt.figure()
-
         sub_plot = fig.add_subplot(111, aspect='equal', autoscale_on=False,
         xlim=(-plot_size, plot_size), ylim=(-plot_size, plot_size))
 
@@ -177,11 +180,3 @@ class nBodySimulator(object):
         else:
             anim = animation.FuncAnimation(fig, animate, frames=total_frames)
             anim.save(file_name, fps=fps, extra_args=['-vcodec', 'libx264'])
-
-
-
-
-
-
-
-

@@ -1,4 +1,4 @@
-class body(object):
+class Body(object):
     """An class which is used to store basic properties about a body"""
 
     def __init__(self, xPos, yPos, xVel, yVel, mass):
